@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Profile, Article, Test, Question, Answer, Achievement
+from .models import *
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -43,3 +43,10 @@ class AchievementAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Achievement, AchievementAdmin)
+
+
+class CalculatedTestAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(CalculatedTest, CalculatedTestAdmin)

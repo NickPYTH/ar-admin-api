@@ -45,6 +45,7 @@ class Article(models.Model):
 
 class Answer(models.Model):
     text = models.CharField(max_length=150, verbose_name="Ответ")
+    isCorrect = models.BooleanField(verbose_name="Правильный ответ")
 
     def __str__(self):
         return self.text
@@ -82,3 +83,14 @@ class Test(models.Model):
         verbose_name_plural = 'Проверочные тесты'
 
 
+class CalculatedTest(models.Model):
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name="Тест")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
+    result = models.BooleanField(verbose_name="Результат")
+
+    def __str__(self):
+        return self.test.title
+
+    class Meta:
+        verbose_name = 'Отправленный тест'
+        verbose_name_plural = 'Отправленные тесты'

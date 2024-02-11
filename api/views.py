@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
 
 from .serializers import *
 from .models import *
@@ -39,3 +40,18 @@ class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     permission_classes = [AllowAny]
+
+
+class CalculatedTestViewSet(viewsets.ModelViewSet):
+    queryset = CalculatedTest.objects.all()
+    serializer_class = CalculatedTestSerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        test = CalculatedTest()
+        test.test = Test.objects.get(id=data['test_id'])
+        test.user = User.objects.get(id=data['user_id'])
+        test.result = data['result']
+        test.save()
+        return Response(status=200)

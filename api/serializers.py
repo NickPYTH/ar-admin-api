@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Profile, Achievement, Answer, Question, Test, Article
+from .models import *
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -28,7 +28,7 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Answer
-        fields = ('id', 'text')
+        fields = ('id', 'text', 'isCorrect')
 
 
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
@@ -51,3 +51,12 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Article
         fields = ('id', 'title', 'body', 'pub_date', 'author')
+
+
+class CalculatedTestSerializer(serializers.HyperlinkedModelSerializer):
+    test = TestSerializer()
+    user = UserSerializer()
+
+    class Meta:
+        model = CalculatedTest
+        fields = ('id', 'user', 'test', 'result')
