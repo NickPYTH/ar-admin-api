@@ -11,6 +11,16 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
 
+    def retrieve(self, request, *args, **kwargs):
+        user = request.user
+        user_serialized = UserSerializer(user)
+        response = user_serialized.data
+        good = CalculatedTest.objects.filter(user=user, result=True)
+        bad = CalculatedTest.objects.filter(user=user, result=False)
+        response['goodTests'] = good.count()
+        response['badTests'] = bad.count()
+        return Response(response, status=200)
+
 
 class AnswerViewSet(viewsets.ModelViewSet):
     queryset = Answer.objects.all()
@@ -27,7 +37,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 class TestViewSet(viewsets.ModelViewSet):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class AchievementViewSet(viewsets.ModelViewSet):
@@ -45,13 +55,13 @@ class ArticleViewSet(viewsets.ModelViewSet):
 class CalculatedTestViewSet(viewsets.ModelViewSet):
     queryset = CalculatedTest.objects.all()
     serializer_class = CalculatedTestSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         data = request.data
         test = CalculatedTest()
         test.test = Test.objects.get(id=data['test_id'])
-        test.user = User.objects.get(id=data['user_id'])
+        test.user = request.user
         test.result = data['result']
         test.save()
         return Response(status=200)
