@@ -17,6 +17,13 @@ class ArticleAdmin(admin.ModelAdmin):
 admin.site.register(Article, ArticleAdmin)
 
 
+class ArticleFireWorksAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(ArticleFireWorks, ArticleFireWorksAdmin)
+
+
 class TestAdmin(admin.ModelAdmin):
     pass
 
@@ -50,3 +57,5 @@ class CalculatedTestAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CalculatedTest, CalculatedTestAdmin)
+
+

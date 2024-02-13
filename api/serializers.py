@@ -53,6 +53,12 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'title', 'body', 'pub_date', 'author')
 
 
+class ArticleFireWorksSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ArticleFireWorks
+        fields = ('id', 'title', 'body', 'pub_date', 'author')
+
+
 class CalculatedTestSerializer(serializers.HyperlinkedModelSerializer):
     test = TestSerializer()
     user = UserSerializer()

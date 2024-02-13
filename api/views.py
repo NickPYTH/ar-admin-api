@@ -52,6 +52,12 @@ class ArticleViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
 
+class ArticleFireWorksViewSet(viewsets.ModelViewSet):
+    queryset = ArticleFireWorks.objects.all()
+    serializer_class = ArticleFireWorksSerializer
+    permission_classes = [AllowAny]
+
+
 class CalculatedTestViewSet(viewsets.ModelViewSet):
     queryset = CalculatedTest.objects.all()
     serializer_class = CalculatedTestSerializer
