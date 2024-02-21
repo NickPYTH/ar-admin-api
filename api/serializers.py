@@ -66,3 +66,9 @@ class CalculatedTestSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CalculatedTest
         fields = ('id', 'user', 'test', 'result')
+
+
+class ArticleImageSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ArticleImage
+        fields = ('id', 'name', 'image')

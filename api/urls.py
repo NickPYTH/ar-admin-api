@@ -11,6 +11,7 @@ router.register(r'tests', views.TestViewSet)
 router.register(r'articles', views.ArticleViewSet)
 router.register(r'articlesFireWorks', views.ArticleFireWorksViewSet)
 router.register(r'calculatedTests', views.CalculatedTestViewSet)
+router.register(r'articleImages', views.ArticleImageViewSet)
 
 
 urlpatterns = [

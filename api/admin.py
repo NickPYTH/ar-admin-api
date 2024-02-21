@@ -59,3 +59,10 @@ class CalculatedTestAdmin(admin.ModelAdmin):
 admin.site.register(CalculatedTest, CalculatedTestAdmin)
 
 
+class ArticleImageAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(ArticleImage, ArticleImageAdmin)
+
+
