@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.contrib.admin import AdminSite
+from django.contrib.auth.models import Group, User
+from django.contrib.auth.admin import GroupAdmin, UserAdmin
 
 from .models import *
 
@@ -64,5 +67,36 @@ class ArticleImageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ArticleImage, ArticleImageAdmin)
+
+
+class TheoryAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Theory, TheoryAdmin)
+
+
+class StudentGroupAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(StudentGroup, StudentGroupAdmin)
+
+
+class CourseAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Course, CourseAdmin)
+
+
+
+
+
+
+
+
+
+
 
 
