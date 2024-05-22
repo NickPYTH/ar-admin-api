@@ -1,6 +1,6 @@
 from django.http import FileResponse
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, AllowAny
 from rest_framework.response import Response
 
 from .serializers import *
@@ -10,7 +10,7 @@ from .models import *
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def retrieve(self, request, *args, **kwargs):
         user = request.user
@@ -26,13 +26,13 @@ class ProfileViewSet(viewsets.ModelViewSet):
 class AnswerViewSet(viewsets.ModelViewSet):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class TestViewSet(viewsets.ModelViewSet):
@@ -44,7 +44,7 @@ class TestViewSet(viewsets.ModelViewSet):
 class AchievementViewSet(viewsets.ModelViewSet):
     queryset = Achievement.objects.all()
     serializer_class = AchievementSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -62,7 +62,7 @@ class ArticleFireWorksViewSet(viewsets.ModelViewSet):
 class CalculatedTestViewSet(viewsets.ModelViewSet):
     queryset = CalculatedTest.objects.all()
     serializer_class = CalculatedTestSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
         data = request.data
@@ -83,3 +83,9 @@ class ArticleImageViewSet(viewsets.ModelViewSet):
         image = ArticleImage.objects.get(name="image_" + kwargs.get("pk"))
         response = FileResponse(image.image)
         return response
+    
+
+class CourseViewSet(viewsets.ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    permission_classes = [AllowAny]

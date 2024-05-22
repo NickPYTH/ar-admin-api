@@ -72,3 +72,9 @@ class ArticleImageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ArticleImage
         fields = ('id', 'name', 'image')
+
+
+class CourseSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Course
+        fields = ('id', 'title', 'description')
