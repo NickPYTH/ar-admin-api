@@ -44,7 +44,7 @@ class TestSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Test
-        fields = ('id', 'title', 'description', 'pub_date', 'author', 'questions')
+        fields = ('id', 'title', 'description', 'pub_date', 'author', 'questions', 'order')
 
 
 class ArticleSerializer(serializers.HyperlinkedModelSerializer):
@@ -74,7 +74,15 @@ class ArticleImageSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'name', 'image')
 
 
+class TheorySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Theory
+        fields = ('id', 'title', 'body', 'order')
+
+
 class CourseSerializer(serializers.HyperlinkedModelSerializer):
+    theories = TheorySerializer(many=True)
+    tests = TestSerializer(many=True)
     class Meta:
         model = Course
-        fields = ('id', 'title', 'description')
+        fields = ('id', 'title', 'description', 'theories', 'tests')
