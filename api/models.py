@@ -123,6 +123,19 @@ class Theory(models.Model):
         verbose_name_plural = '2 Обучающие статьи'
 
 
+class TheoryAndStudent(models.Model):
+    theory = models.ForeignKey(Theory, verbose_name="Статья", on_delete=models.CASCADE)
+    student = models.ForeignKey(Profile, verbose_name="Студент", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.theory.title + " " + self.student.user.username
+
+    class Meta:
+        verbose_name = 'Статьи и студенты'
+        verbose_name_plural = 'Статьи и студенты'
+
+
+
 class StudentGroup(models.Model):
     teacher = models.ForeignKey(Profile, related_name='teacher', on_delete=models.CASCADE, verbose_name="Преподаватель")
     students = models.ManyToManyField(Profile, related_name='students', verbose_name="Студенты")

@@ -90,6 +90,13 @@ class CourseAdmin(admin.ModelAdmin):
 admin.site.register(Course, CourseAdmin)
 
 
+class TheoryAndStudentAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(TheoryAndStudent, TheoryAndStudentAdmin)
+
+
 
 
 

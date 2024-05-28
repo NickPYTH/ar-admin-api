@@ -80,9 +80,19 @@ class TheorySerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'title', 'body', 'order')
 
 
+class TheoryAndStudentSerializer(serializers.HyperlinkedModelSerializer):
+    theory = TheorySerializer()
+    student = ProfileSerializer()
+
+    class Meta:
+        model = TheoryAndStudent
+        fields = ('theory', 'student')
+
+
 class CourseSerializer(serializers.HyperlinkedModelSerializer):
     theories = TheorySerializer(many=True)
     tests = TestSerializer(many=True)
+
     class Meta:
         model = Course
         fields = ('id', 'title', 'description', 'theories', 'tests')
