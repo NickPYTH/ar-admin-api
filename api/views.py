@@ -1,5 +1,6 @@
 from django.http import FileResponse
 from rest_framework import viewsets, status
+from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
@@ -77,7 +78,7 @@ class CalculatedTestViewSet(viewsets.ModelViewSet):
 class ArticleImageViewSet(viewsets.ModelViewSet):
     queryset = ArticleImage.objects.all()
     serializer_class = ArticleImageSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def retrieve(self, request, *args, **kwargs):
         image = ArticleImage.objects.get(name="image_" + kwargs.get("pk"))
@@ -89,6 +90,43 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = [IsAuthenticated]
+
+    def retrieve(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=request.user)
+        queryset = Course.objects.all()
+        course = get_object_or_404(queryset, pk=kwargs.get("pk"))
+        serializer = CourseSerializer(course, context={'request': request})
+
+        for theory in serializer["theories"].value:
+            if len(TheoryAndStudent.objects.filter(student=profile, theory=Theory.objects.get(id=theory["id"]))) > 0:
+                theory["isRead"] = True
+            else:
+                theory["isRead"] = False
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def list(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=request.user)
+        courses = Course.objects.all()
+        response = []
+        for course in courses:
+            current_points = 0
+            theories = course.theories.all()
+            for theory in theories:
+                if len(TheoryAndStudent.objects.filter(student=profile, theory=theory)) > 0:
+                    current_points += 1
+            tests = course.tests.all()
+            max_points = len(theories) + len(tests)
+            course_data = {
+                "id": course.id,
+                "title": course.title,
+                "description": course.description,
+                "currentPoints": current_points,
+                "maxPoints": max_points
+            }
+            response.append(course_data)
+
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class TheoryViewSet(viewsets.ModelViewSet):
