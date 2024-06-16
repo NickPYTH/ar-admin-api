@@ -12,6 +12,7 @@ class Test(models.Model):
     pub_date = models.DateTimeField(default=datetime.now(), verbose_name="Дата и время публикации")
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="Автор")
     questions = models.ManyToManyField(Question, verbose_name="Вопросы")
+    pass_line = models.FloatField(default=0.6, verbose_name="Проходной процент(от 0 до 1)")
 
     def __str__(self):
         return self.title

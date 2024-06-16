@@ -9,6 +9,7 @@ from api.models.calculatedTest import CalculatedTest
 from api.models.course import Course
 from api.models.profile import Profile
 from api.models.question import Question
+from api.models.test_user_question_answer import TestUserQuestionAnswer
 from api.models.studentGroup import StudentGroup
 from api.models.test import Test
 from api.models.theory import Theory
@@ -104,3 +105,10 @@ class TheoryAndStudentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TheoryStudent, TheoryAndStudentAdmin)
+
+
+class QuestionAnswerAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(TestUserQuestionAnswer, QuestionAnswerAdmin)
