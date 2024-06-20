@@ -1,3 +1,5 @@
+import json
+
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -24,10 +26,10 @@ class CalculatedTestViewSet(viewsets.ModelViewSet):
         question_answer_list = []
         maxPoints = 0
         userPoints = 0
-        for el in data['result']:
-            question = Question.objects.get(id=el['questionId'])
+        for el in json.loads(data['result']):
+            question = Question.objects.get(id=el['QuestionId'])
             maxPoints += question.points
-            answer = Answer.objects.get(id=el['answerId'])
+            answer = Answer.objects.get(id=el['AnswerId'])
             if answer.isCorrect:
                 userPoints += question.points
             question_answer = TestUserQuestionAnswer.objects.create(user=test.user,
