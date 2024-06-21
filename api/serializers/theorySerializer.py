@@ -6,4 +6,4 @@ from api.models.theory import Theory
 class TheorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Theory
-        fields = ('id', 'title', 'body', 'order')
+        fields = ('id', 'title', 'body', 'order', 'time')

@@ -26,7 +26,7 @@ class CalculatedTestViewSet(viewsets.ModelViewSet):
         question_answer_list = []
         max_points = 0
         user_points = 0
-        for el in data['result']:
+        for el in json.loads(data['result']):
             question = Question.objects.get(id=el['QuestionId'])
             max_points += question.points
             answer = Answer.objects.get(id=el['AnswerId'])

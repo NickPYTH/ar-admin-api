@@ -9,4 +9,4 @@ class TestSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Test
-        fields = ('id', 'title', 'description', 'pub_date', 'author', 'questions', 'order')
+        fields = ('id', 'title', 'description', 'pub_date', 'author', 'questions', 'order', 'time')

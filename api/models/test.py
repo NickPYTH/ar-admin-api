@@ -13,6 +13,7 @@ class Test(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="Автор")
     questions = models.ManyToManyField(Question, verbose_name="Вопросы")
     pass_line = models.FloatField(default=0.6, verbose_name="Проходной процент(от 0 до 1)")
+    time = models.IntegerField(default=10, verbose_name="Примерное время на прохождение теста")
 
     def __str__(self):
         return self.id.__str__() + ' ' + self.title
