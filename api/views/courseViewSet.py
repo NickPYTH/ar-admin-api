@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from api.models.course import Course
 from api.models.profile import Profile
 from api.models.theory import Theory
+from api.models.test import Test
+from api.models.calculatedTest import CalculatedTest
 from api.models.theory_student import TheoryStudent
 from api.serializers.courseSerializer import CourseSerializer
 
@@ -26,6 +28,22 @@ class CourseViewSet(viewsets.ModelViewSet):
                 theory["isRead"] = True
             else:
                 theory["isRead"] = False
+
+        for test in serializer['tests'].value:
+            test_model = Test.objects.get(id=test['id'])
+            best_test_result = None
+            if CalculatedTest.objects.filter(user=request.user, test=test_model).count() != 0:
+                best_test_result = CalculatedTest.objects.filter(user=request.user, test=test_model).order_by(
+                    "-user_points").first()
+            if best_test_result is not None:
+                test['maxPoints'] = best_test_result.max_points
+                test['userPoints'] = best_test_result.user_points
+            else:
+                max_points = 0
+                for question in test_model.questions.all():
+                    max_points += question.points
+                test['maxPoints'] = max_points
+                test['userPoints'] = 0
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 

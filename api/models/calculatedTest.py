@@ -13,6 +13,8 @@ class CalculatedTest(models.Model):
     test_user_question_answer_list = models.ManyToManyField(TestUserQuestionAnswer,
                                                             related_name='test_user_question_answer_list',
                                                             verbose_name="Тест пользователь вопрос ответ")
+    max_points = models.IntegerField(verbose_name="Максимальное кол-во баллов")
+    user_points = models.IntegerField(verbose_name="Набранное кол-во баллов")
 
     def __str__(self):
         return '{0} {1}'.format(self.user.username, self.test.title)

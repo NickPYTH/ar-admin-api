@@ -24,14 +24,14 @@ class CalculatedTestViewSet(viewsets.ModelViewSet):
         test.user = request.user
         test.save()
         question_answer_list = []
-        maxPoints = 0
-        userPoints = 0
+        max_points = 0
+        user_points = 0
         for el in json.loads(data['result']):
             question = Question.objects.get(id=el['QuestionId'])
-            maxPoints += question.points
+            max_points += question.points
             answer = Answer.objects.get(id=el['AnswerId'])
             if answer.isCorrect:
-                userPoints += question.points
+                user_points += question.points
             question_answer = TestUserQuestionAnswer.objects.create(user=test.user,
                                                                     question=question,
                                                                     answer=answer)
@@ -39,6 +39,8 @@ class CalculatedTestViewSet(viewsets.ModelViewSet):
             question_answer_list.append(question_answer)
             question_answer.save()
         test.test_user_question_answer_list.set(question_answer_list)
+        test.max_points = max_points
+        test.user_points = user_points
         test.save()
-        is_passed = test.test.pass_line <= (userPoints / maxPoints)
-        return Response({"isPassed": is_passed, "maxPoints": maxPoints, "userPoints": userPoints}, status=201)
+        is_passed = test.test.pass_line <= (user_points / max_points)
+        return Response({"isPassed": is_passed, "maxPoints": max_points, "userPoints": user_points}, status=201)
