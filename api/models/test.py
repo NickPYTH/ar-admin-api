@@ -15,7 +15,7 @@ class Test(models.Model):
     pass_line = models.FloatField(default=0.6, verbose_name="Проходной процент(от 0 до 1)")
 
     def __str__(self):
-        return self.title
+        return self.id.__str__() + ' ' + self.title
 
     class Meta:
         verbose_name = 'Проверочный тест'
