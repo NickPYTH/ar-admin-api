@@ -12,6 +12,7 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+
     class Meta:
         verbose_name = 'Вопрос для теста'
         verbose_name_plural = '4 Вопросы для тестов'
