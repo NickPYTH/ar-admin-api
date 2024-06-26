@@ -69,7 +69,7 @@ class CourseViewSet(viewsets.ModelViewSet):
                     best_test_result = CalculatedTest.objects.filter(user=request.user, test=test).order_by(
                         "-user_points").first()
                 if best_test_result is not None:
-                    if test.test.pass_line <= (best_test_result.user_points / best_test_result.max_points):
+                    if test.pass_line <= (best_test_result.user_points / best_test_result.max_points):
                         current_points += best_test_result.user_points
 
             course_data = {
