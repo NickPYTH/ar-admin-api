@@ -52,13 +52,26 @@ class CourseViewSet(viewsets.ModelViewSet):
         courses = Course.objects.all()
         response = []
         for course in courses:
+            max_points = 0
             current_points = 0
             theories = course.theories.all()
             for theory in theories:
                 if len(TheoryStudent.objects.filter(student=profile, theory=theory)) > 0:
-                    current_points += 1
-            tests = course.tests.all()
-            max_points = len(theories) + len(tests)
+                    current_points += theory.points
+                max_points += theory.points
+            for test in course.tests.all():
+                test_points = 0
+                for question in test.questions.all():
+                    test_points += question.points
+                max_points += test_points
+                best_test_result = None
+                if CalculatedTest.objects.filter(user=request.user, test=test).count() != 0:
+                    best_test_result = CalculatedTest.objects.filter(user=request.user, test=test).order_by(
+                        "-user_points").first()
+                if best_test_result is not None:
+                    if test.test.pass_line <= (best_test_result.user_points / best_test_result.max_points):
+                        current_points += best_test_result.user_points
+
             course_data = {
                 "id": course.id,
                 "title": course.title,
