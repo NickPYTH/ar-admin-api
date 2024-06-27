@@ -17,8 +17,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
         user = request.user
         user_serialized = UserSerializer(user)
         response = user_serialized.data
-        good = CalculatedTest.objects.filter(user=user, result=True)
-        bad = CalculatedTest.objects.filter(user=user, result=False)
-        response['goodTests'] = good.count()
-        response['badTests'] = bad.count()
+        #  good = CalculatedTest.objects.filter(user=user, result=True)
+        #  bad = CalculatedTest.objects.filter(user=user, result=False)
+        response['goodTests'] = 0
+        response['badTests'] = 0
         return Response(response, status=200)
