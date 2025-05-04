@@ -12,6 +12,6 @@ class ArticleImageViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
     def retrieve(self, request, *args, **kwargs):
-        image = ArticleImage.objects.get(name="image_" + kwargs.get("pk"))
+        image = ArticleImage.objects.get(name=kwargs.get("pk"))
         response = FileResponse(image.image)
         return response

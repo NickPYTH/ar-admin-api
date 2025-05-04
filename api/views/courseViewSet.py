@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
@@ -16,6 +17,17 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        id = request.data.get('id')
+        if id is None:
+            course = Course.objects.create(title=request.data.get('title'))
+        else:
+            course = Course.objects.get(id=id)
+            course.title = request.data.get('title')
+        course.save()
+
+        return HttpResponse(status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
         profile = Profile.objects.get(user=request.user)
