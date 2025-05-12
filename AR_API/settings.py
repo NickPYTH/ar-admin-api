@@ -44,7 +44,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://83.222.9.213:7888'
+    'http://83.222.9.213:6767'
 ]
 
 ROOT_URLCONF = 'AR_API.urls'
